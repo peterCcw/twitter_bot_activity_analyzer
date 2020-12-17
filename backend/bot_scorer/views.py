@@ -120,6 +120,11 @@ def make_snapshot(twitter_id=-1, screen_name="-1"):
         'is_active': is_active,
         'suspended_info': "",
     }
+
+    # url must not be None
+    if output_dict['url'] is None:
+        output_dict['url'] = ""
+
     return output_dict
 
 
