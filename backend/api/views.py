@@ -1,55 +1,23 @@
 from django.contrib.auth.models import User
+from django.dispatch import receiver
+from django.db.models.signals import pre_delete
+from django.db.models import ObjectDoesNotExist
+
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, \
     permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+
+from tweepy import TweepError
+
 from .models import Account, AccountSnapshot
-from django.db.models import ObjectDoesNotExist
 from .serializers import AccountSnapshotAllSerializer, \
     AccountSnapshotDetailSerializer, AccountSerializer, \
     UserRegistrationSerializer
-from django.db.models.signals import pre_delete
-from django.dispatch import receiver
+from bot_scorer.views import make_snapshot, get_most_important_features
 
-
-# @api_view(['GET'])
-# @authentication_classes([TokenAuthentication])
-# @permission_classes([IsAuthenticated])
-# def snapshot_list(request):
-#     """
-#     Returns list of snapshots for specific account. Needs account id as
-#     account_id in the request.
-#
-#     :param request: rest_framework.request.Request
-#     :return: rest_framework.response.Response
-#     """
-#     # checks account_id request param
-#     try:
-#         account_id = request.query_params['account_id']
-#         account_id = int(account_id)
-#     except KeyError:
-#         return Response(data={'message': "Missing value of account_id"},
-#                         status=status.HTTP_400_BAD_REQUEST)
-#     except ValueError:
-#         return Response(data={'message': "Incorrect value of account_id"},
-#                         status=status.HTTP_400_BAD_REQUEST)
-#     # checks if specific account exists
-#     try:
-#         account = Account.objects.get(id=account_id)
-#     except ObjectDoesNotExist:
-#         return Response(data={'message': "Account not found"},
-#                         status=status.HTTP_404_NOT_FOUND)
-#     # checks if account is on logged user's list - permissions
-#     users = User.objects.all().filter(account=account)
-#     if request.user not in users:
-#         return Response(data={'message': "Account is not on the user's list"},
-#                         status=status.HTTP_403_FORBIDDEN)
-#     else:
-#         snapshots = AccountSnapshot.objects.all().filter(account=account_id)
-#         serializer = AccountSnapshotAllSerializer(snapshots, many=True)
-#         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
 @api_view(['GET'])
 @authentication_classes([TokenAuthentication])
@@ -75,7 +43,17 @@ def snapshot_list(request, account_id):
         return Response(data={'message': "Account is not on the user's list"},
                         status=status.HTTP_403_FORBIDDEN)
     else:
-        snapshots = AccountSnapshot.objects.all().filter(account=account_id)
+        if 'date_start' in request.query_params:
+            date_start = request.query_params['date_start']
+        else:
+            date_start = "0001-01-01"
+        if 'date_end' in request.query_params:
+            date_end = request.query_params['date_end']
+        else:
+            date_end = "9999-12-31"
+        snapshots = AccountSnapshot.objects.all().\
+            filter(account=account_id, date_of_snapshot__range=[date_start,
+                                                                date_end])
         serializer = AccountSnapshotAllSerializer(snapshots, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -118,7 +96,8 @@ def account_list(request):
     :param request: rest_framework.request.Request
     :return: rest_framework.response.Response
     """
-    accounts = Account.objects.all().filter(users=request.user)
+    accounts = Account.objects.all().filter(users=request.user)\
+        .order_by('screen_name')
     serializer = AccountSerializer(accounts, many=True)
     return Response(data=serializer.data, status=status.HTTP_200_OK)
 
@@ -205,7 +184,7 @@ def user_create(request):
     """
     serializer = UserRegistrationSerializer(data=request.data)
     if serializer.is_valid():
-        user = serializer.save()
+        serializer.save()
         return Response(data={'message': 'Account created'},
                         status=status.HTTP_201_CREATED)
     else:
@@ -226,6 +205,54 @@ def user_logout(request):
     request.user.auth_token.delete()
     return Response(data={'message': 'Successfully logged out'},
                     status=status.HTTP_200_OK)
+
+
+@api_view(['GET'])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def show_score(request):
+    """
+    Returns current info about specific account without saving snapshot
+
+    :param request: rest_framework.request.Request
+    :return: rest_framework.response.Response
+    """
+    if 'screen_name' not in request.query_params:
+        return Response(data={'message': "Missing screen name"},
+                        status=status.HTTP_400_BAD_REQUEST)
+    else:
+        screen_name = request.query_params['screen_name']
+    try:
+        snapshot_dict = make_snapshot(screen_name=screen_name)
+    except TweepError as e:
+        return Response(data={'message': e.args[0][0]['message']},
+                        status=status.HTTP_200_OK)
+
+    features = {
+        'statuses_count': snapshot_dict['statuses_count'],
+        'followers_count': snapshot_dict['followers_count'],
+        'friends_count': snapshot_dict['friends_count'],
+        'favourites_count': snapshot_dict['favourites_count'],
+        'listed_count': snapshot_dict['listed_count'],
+        'default_profile': snapshot_dict['default_profile'],
+        'verified': snapshot_dict['verified'],
+        'protected': snapshot_dict['protected'],
+    }
+
+    output_dict = {
+        'twitter_id': snapshot_dict['twitter_id'],
+        'name': snapshot_dict['name'],
+        'screen_name': snapshot_dict['screen_name'],
+        'location': snapshot_dict['location'],
+        'url':  snapshot_dict['url'],
+        'description': snapshot_dict['description'],
+        'created_at': snapshot_dict['created_at'],
+        'features': get_most_important_features(features),
+        'bot_score': snapshot_dict['bot_score'],
+        'suspended_info': snapshot_dict['suspended_info'],
+    }
+
+    return Response(data=output_dict, status=status.HTTP_200_OK)
 
 
 @receiver(pre_delete, sender=User)

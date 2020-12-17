@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.models import Group
-from .models import Account, AccountSnapshot#, AccountList
+from .models import Account, AccountSnapshot
 
 
 @admin.register(Account)
@@ -9,5 +9,4 @@ class AccountAdmin(admin.ModelAdmin):
 
 
 admin.site.register(AccountSnapshot)
-#admin.site.register(AccountList)
 admin.site.unregister(Group)
