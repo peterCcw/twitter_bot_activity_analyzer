@@ -1,0 +1,18 @@
+<mat-toolbar color="primary">
+  <span (click)="displayHome()" class="navbar-title">{{ dict.appName }}</span>
+
+  <span class="spacer"></span>
+
+  <span *ngIf="this.isLogged()" class="navbar-hello">{{ dict.greeting }}, {{ this.cookieService.get('username') }}!</span>
+  <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayPanel()" class="navbar-button">{{ dict.panel }}</button>
+  <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayList()" class="navbar-button">{{ dict.listHeader}}</button>
+  <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayCheckAccount()" class="navbar-button">{{ dict.checkAccount }}</button>
+  <button mat-stroked-button *ngIf="this.isLogged()" (click)="logOut()" class="navbar-button">{{ dict.logOut }}</button>
+  <button mat-stroked-button *ngIf="!this.isLogged()" (click)="logIn()" class="navbar-button">{{ dict.logIn }}</button>
+  <button mat-stroked-button *ngIf="!this.isLogged()" (click)="register()" class="navbar-button">{{ dict.registerShort }}</button>
+</mat-toolbar>
+<app-auth *ngIf="component == 'auth'" [mode]="this.authMode" [logInClicked]="logInSubject.asObservable()" [registerClicked]="registerSubject.asObservable()" (loggedInEmitter)="gotLogged($event)"></app-auth>
+<app-panel *ngIf="component == 'panel'" (detailEmitter)="goDetail($event)"></app-panel>
+<app-list *ngIf="component == 'list'" (addAccountClicked)='addAccount($event)'></app-list>
+<app-check *ngIf="component == 'check'" [checkClicked]="checkSubject.asObservable()"></app-check>
+<app-detail *ngIf="component == 'detail'" [detailInfo]="this.detailInfo"></app-detail>

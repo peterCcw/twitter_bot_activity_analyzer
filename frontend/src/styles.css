@@ -1,0 +1,183 @@
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mat-grid-tile .mat-figure {
+    justify-content: flex-start !important ;
+    align-items: flex-start !important;
+ }
+
+.error-snackbar {
+    background: red!important;
+    color: white !important;
+    white-space: pre;
+}
+
+.error-snackbar .mat-button{
+    color: white !important;
+}
+
+.error-snackbar .mat-button:hover{
+    background-color: brown !important;
+}
+
+.margined-header {
+    margin-bottom: 1% !important;
+}
+
+.mat-card {
+  margin: 1%;
+  max-height: 80vh;
+}
+
+.allow-cr {
+  white-space: pre;
+}
+
+.my-wide-tooltip {
+  max-width: unset !important;
+  font-size: 100%;
+}
+
+.mat-header-cell {
+  font-size: 100%;
+}
+
+.padded-right {
+  padding-right: 1rem;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.navbar-button {
+  font-size: 100%;
+  margin: 0.25% !important;
+  background-color: #4178db;
+}
+
+.navbar-title {
+  font-size: 200%;
+}
+
+.navbar-title:hover {
+  cursor: pointer;
+}
+
+.navbar-hello {
+  margin-right: 1%;
+}
+
+.panel-account-list-grid {
+  display: inline;
+  height: 100%;
+  width: 100%;
+  margin: 1%;
+}
+
+.panel-account-list {
+  max-width: 100%;
+}
+
+.scroll-panel {
+  height: 55%;
+  margin-bottom: 7%;
+}
+
+.scroll-list {
+  height: 100%;
+}
+
+.mat-card-content {
+  max-height: 100%;
+}
+
+.mat-table {
+  width: 50%;
+  height: 100%;
+}
+
+.table-div {
+  margin-bottom: 2%;
+  height: 68vh;
+}
+
+.list-content {
+  height: 100%;
+}
+
+.margined-button {
+  margin-left: 5% !important;
+}
+
+.trend-icon {
+  font-size: xx-large;
+  margin-bottom: 7%;
+  margin-left: 5%;
+}
+
+.features-with-changes{
+  width: 50%;
+}
+
+.margined-suspended-info-changes {
+  padding-top: 1% !important;
+  width: 30%;
+}
+
+.margined-score-changes {
+  display: flex;
+}
+
+.score-div {
+  display: flex;
+}
+
+.score-inline {
+  display: inline;
+}
+
+.h2-no-margin{
+  margin-bottom: 1% !important;
+}
+
+.change-icon-no-bmargin {
+  margin-bottom: 0px;
+}
+
+.date-range-subtitle {
+  margin-top: 10% !important;
+}
+
+.date-range-div {
+  display: flex;
+  align-content: center;
+}
+
+#chartjs-tooltip {
+  white-space: pre;
+}
+
+.chart-container {
+  width: 90%;
+  height: 67%
+}
+
+.mat-icon {
+  margin-left: 1%;
+}
+
+.subtitle {
+  margin-left: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0%;
+}
+
+.score {
+  margin: 0.5%;
+  display: table-row;
+}
+
+.margined-suspended-info {
+  padding-top: 1% !important;
+}

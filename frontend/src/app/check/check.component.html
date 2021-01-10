@@ -1,0 +1,101 @@
+<mat-card class="mat-elevation-z8">
+    <mat-card-title class="margined-header">{{ dict.checkHeader }}</mat-card-title>
+    <mat-card-content>    
+        <div *ngIf="!result">
+            <form [formGroup]="checkForm" (ngSubmit)="checkAccount()">
+                <mat-form-field appearance="outline">
+                    <mat-label>{{ dict.checkFormLabel }}</mat-label>
+                    <input matInput formControlName="screenName" placeholder="{{ dict.accountScreenNamePlaceholder }}">
+                    <mat-hint>{{ dict.checkFormHint }}</mat-hint>
+                </mat-form-field>
+                <br>
+                <br>
+                <button mat-stroked-button [disabled]="this.checkForm.get('screenName').value==''" type="submit" class="mat-elevation-z4">{{ dict.check }}</button>
+            </form>
+        </div>
+        <div *ngIf="result">
+            <div *ngIf="!result.suspended_info">
+                <mat-divider></mat-divider>
+                <mat-grid-list cols="2" rowHeight="fit" style="height: 600px;">
+                    <mat-grid-tile rowspan=3>
+                        <div>
+                            <h2 class="subtitle">{{ dict.basicInfo }}:</h2>
+                            <mat-list role="list">
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.twitterId }}: </b>   {{ result.twitter_id }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.screenName }}: </b>  {{ result.screen_name }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.name }}: </b> {{ result.name }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.location }}: </b> {{ result.location }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.url }}: </b> {{ result.url }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.description }}: </b> {{ result.description }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.createdAt }}: </b> {{ result.created_at }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.isActive }}: </b> {{ result.is_active }}</p>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile rowspan=3>
+                        <div>
+                            <h2 class="subtitle">{{ dict.features }}:</h2>
+                            <mat-list role="list">
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.statusesCount }}:</b> {{ result.features.statuses_count }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.followersCount }}:</b> {{ result.features.followers_count }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.friendsCount }}:</b> {{ result.features.friends_count }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.favouritesCount }}:</b> {{ result.features.favourites_count }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.listedCount }}:</b> {{ result.features.listed_count }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.defaultProfile }}:</b> {{ result.features.default_profile }}</p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.verified }}:</b> {{ result.features.verified }} </p>
+                                </mat-list-item>
+                                <mat-list-item role="listitem">
+                                    <p><b>{{ dict.protected }}:</b> {{ result.features.protected }}</p>
+                                </mat-list-item>
+                            </mat-list>
+                        </div>
+                    </mat-grid-tile>
+                    <mat-grid-tile colspan=2>
+                        <mat-divider></mat-divider>
+                        <div class="margined-suspended-info">
+                            <h2 class="score">{{ dict.botScore }}: {{ result.bot_score }}</h2>
+                            <br>
+                            <button mat-stroked-button *ngIf="!result.added" (click)="addToList()" class="mat-elevation-z4">{{ dict.addAccount }}</button>
+                            <h2 *ngIf="result.added">{{ dict.accountAdded }}.</h2>
+                        </div>
+                    </mat-grid-tile>
+                </mat-grid-list>
+            </div>
+            <div *ngIf="result.suspended_info">
+                <mat-divider></mat-divider>
+                <div class="margined-suspended-info">
+                    <h2>{{result.suspended_info}}</h2>
+                </div>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

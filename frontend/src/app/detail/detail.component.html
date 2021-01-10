@@ -1,0 +1,114 @@
+<mat-card class="mat-elevation-z8">
+    <mat-card-title class="margined-header">{{ dict.snapshotDetails }}</mat-card-title>
+    <mat-card-content>
+        <mat-grid-list *ngIf="detailedSnapshot != null" cols="2" rowHeight="fit" style="height: 600px;">
+            <mat-grid-tile rowspan=3>
+                <div>
+                    <h2 class="subtitle">{{ dict.basicInfo }}:</h2>
+                    <mat-list role="list">
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.twitterId }}: </b>   {{ detailedSnapshot.twitter_id }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.screenName }}: </b>  {{ detailedSnapshot.screen_name }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.name }}: </b> {{ detailedSnapshot.name }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.location }}: </b> {{ detailedSnapshot.location }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.url }}: </b> {{ detailedSnapshot.url }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.description }}: </b> {{ detailedSnapshot.description }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.createdAt }}: </b> {{ detailedSnapshot.created_at }}</p>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.isActive }}: </b> {{ detailedSnapshot.is_active }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.is_active == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.is_active == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.is_active == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan=3>
+                <div class="features-with-changes">
+                    <h2 class="subtitle">{{ dict.features }}:</h2>
+                    <mat-list role="list">
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.statusesCount }}:</b> {{ detailedSnapshot.features.statuses_count }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.statuses_count == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.statuses_count == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.statuses_count == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.followersCount }}:</b> {{ detailedSnapshot.features.followers_count }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.followers_count == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.followers_count == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.followers_count == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.friendsCount }}:</b> {{ detailedSnapshot.features.friends_count }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.friends_count == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.friends_count == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.friends_count == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.favouritesCount }}:</b> {{ detailedSnapshot.features.favourites_count }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.favourites_count == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.favourites_count == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.favourites_count == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b> {{ dict.listedCount }}:</b> {{ detailedSnapshot.features.listed_count }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.listed_count == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.listed_count == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.listed_count == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.defaultProfile }}:</b> {{ detailedSnapshot.features.default_profile }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.default_profile == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.default_profile == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.default_profile == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.verified }}:</b> {{ detailedSnapshot.features.verified }} </p>
+                            <mat-icon *ngIf="detailedSnapshot.change.verified == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.verified == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.verified == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                        <mat-list-item role="listitem">
+                            <p><b>{{ dict.protected }}:</b> {{ detailedSnapshot.features.protected }}</p>
+                            <mat-icon *ngIf="detailedSnapshot.change.protected == 'up'" class="trend-icon">trending_up</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.protected == '-'" class="trend-icon">trending_flat</mat-icon>
+                            <mat-icon *ngIf="detailedSnapshot.change.protected == 'down'" class="trend-icon">trending_down</mat-icon>
+                        </mat-list-item>
+                    </mat-list>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile colspan=2>
+                <mat-divider></mat-divider>
+                <div class="margined-suspended-info-changes">
+                    <div class="score-div">
+                        <h2 class="score-inline h2-no-margin">{{ dict.botScore }}: {{ detailedSnapshot.bot_score }}</h2> 
+                        <mat-icon *ngIf="detailedSnapshot.change.bot_score == 'up'" class="trend-icon score-inline change-icon-no-bmargin">trending_up</mat-icon>
+                        <mat-icon *ngIf="detailedSnapshot.change.bot_score == '-'" class="trend-icon score-inline change-icon-no-bmargin">trending_flat</mat-icon>
+                        <mat-icon *ngIf="detailedSnapshot.change.bot_score == 'down'" class="trend-icon score-inline change-icon-no-bmargin">trending_down</mat-icon>
+                    </div>
+                    <div>
+                        <h2 class="h2-no-margin">{{ dict.dateOfSnapshot }}: {{ detailedSnapshot.date_of_snapshot | date:"dd-MM-yyyy" }}</h2>
+                    </div>
+                    <div>
+                        <button mat-stroked-button [disabled]="!previousButtonAvailable" (click)="previousSnapshot()">{{ dict.previousSnapshot }}</button>
+                        <button mat-stroked-button [disabled]="!nextButtonAvailable" (click)="nextSnapshot()" class="margined-button">{{ dict.nextSnapshot }}</button>
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
+</mat-card>

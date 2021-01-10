@@ -225,8 +225,12 @@ def show_score(request):
     try:
         snapshot_dict = make_snapshot(screen_name=screen_name)
     except TweepError as e:
+        print(e)
         return Response(data={'message': e.args[0][0]['message']},
                         status=status.HTTP_200_OK)
+    except ValueError as e:
+        return Response(data={'message': "Incorrect screen name"},
+                        status=status.HTTP_400_BAD_REQUEST)
 
     features = {
         'statuses_count': snapshot_dict['statuses_count'],
@@ -249,6 +253,7 @@ def show_score(request):
         'created_at': snapshot_dict['created_at'],
         'features': get_most_important_features(features),
         'bot_score': snapshot_dict['bot_score'],
+        'is_active': snapshot_dict['is_active'],
         'suspended_info': snapshot_dict['suspended_info'],
     }
 

@@ -1,0 +1,53 @@
+<mat-card class="mat-elevation-z8">
+    <mat-card-title class="margined-header">{{ dict.panelHeader }}</mat-card-title>
+    <mat-card-content>
+        <mat-grid-list cols="3" rowHeight="fit" style="height: 700px;">
+            <mat-grid-tile colspan=2 rowspan=3>
+                <div class="chart-container">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </mat-grid-tile>
+            <mat-grid-tile rowspan=3>
+                <div class="panel-account-list-grid">
+                    <h2>{{ dict.monitoredAccounts }}:</h2>
+                    <cdk-virtual-scroll-viewport class="scroll-panel" itemSize="50">
+                        <mat-selection-list color="primary" (selectionChange)="onChangeList($event)" class="panel-account-list">
+                            <mat-list-option *ngFor="let account of accounts" [value]="account.id" [selected]="true">
+                                {{ account.screenName }}
+                            </mat-list-option>
+                        </mat-selection-list>
+                    </cdk-virtual-scroll-viewport>
+                    <mat-divider></mat-divider>
+
+                    <h2 class="date-range-subtitle">{{ dict.monitoredDateRange }}:</h2>
+                    <div class="date-range-div">
+                        <mat-form-field appearance="fill">
+                            <!-- Label -->
+                            <mat-label>{{ dict.enterDateRange }}</mat-label>  <!-- Range Inputs -->
+                            <mat-date-range-input 
+                              [formGroup]="formGroup" 
+                              [rangePicker]="picker">
+                              
+                              <input (ngModelChange)="prepareData()"
+                                matStartDate 
+                                formControlName="startDate" 
+                                placeholder="{{ dict.startDatePlaceholder }}">
+                              
+                              <input (ngModelChange)="prepareData()"
+                                matEndDate
+                                formControlName="endDate" 
+                                placeholder="{{ dict.endDatePlaceholder }}">
+                            </mat-date-range-input>  <!-- Toggle to open calendar picker -->
+                            <mat-datepicker-toggle 
+                              matSuffix [for]="picker">
+                            </mat-datepicker-toggle>  <!-- Date range picker -->
+                            <mat-date-range-picker #picker></mat-date-range-picker>
+                          </mat-form-field>
+                        <input id="hiddenSnapshotId" value='' (click)="goSnapshotDetail()" style="display: none;">
+                        <input id="hiddenAccountId" value='' style="display: none;">
+                    </div>
+                </div>
+            </mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
+</mat-card>

@@ -89,15 +89,20 @@ def make_snapshot(twitter_id=-1, screen_name="-1"):
     proba_result = classifier.predict_proba(features)
     bot_score = proba_result[0][1]
 
-    if twitter_id != -1:
-        tweet = api.user_timeline(user_id=twitter_id, count=1)[0]
-    elif screen_name != '-1':
-        tweet = api.user_timeline(screen_name=screen_name, count=1)[0]
+    try:
+        if twitter_id != -1:
+            tweet = api.user_timeline(user_id=twitter_id, count=1)[0]
+        elif screen_name != '-1':
+            tweet = api.user_timeline(screen_name=screen_name, count=1)[0]
 
-    diff_days = (datetime.date.today() - tweet.created_at.date()).days
-    is_active = True
+        diff_days = (datetime.date.today() - tweet.created_at.date()).days
+        is_active = True
 
-    if diff_days > 90:
+        if diff_days > 90:
+            is_active = False
+    except IndexError:
+        is_active = False
+    except TweepError:
         is_active = False
 
     output_dict = {
@@ -185,7 +190,18 @@ def get_data_change(snapshot_id):
     snapshots = list(AccountSnapshot.objects.all().filter(
         account=snapshot.account).order_by('-date_of_snapshot'))
     if snapshots[-1] == snapshot:
-        return None
+        return {
+            'statuses_count': None,
+            'followers_count': None,
+            'friends_count': None,
+            'favourites_count': None,
+            'listed_count': None,
+            'default_profile': None,
+            'verified': None,
+            'protected': None,
+            'bot_score': None,
+            'is_active': None
+        }
     else:
         snapshot_index = snapshots.index(snapshot)
         previous_snapshot = snapshots[snapshot_index + 1]
