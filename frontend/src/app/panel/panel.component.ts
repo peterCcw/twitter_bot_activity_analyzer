@@ -45,10 +45,10 @@ export class PanelComponent implements OnInit {
     this.ctx = document.getElementById('myChart');
 
     var currentDate = new Date();
-    var currDatePlus7 = new Date(currentDate.getTime() + (7 * 24 * 60 * 60 * 1000));
+    var currDateMinus7 = new Date(currentDate.getTime() - (7 * 24 * 60 * 60 * 1000));
 
-    this.formGroup.get('startDate').setValue(currentDate);
-    this.formGroup.get('endDate').setValue(currDatePlus7);
+    this.formGroup.get('startDate').setValue(currDateMinus7);
+    this.formGroup.get('endDate').setValue(currentDate);
 
     
     this.apiService.getAccounts().subscribe(
