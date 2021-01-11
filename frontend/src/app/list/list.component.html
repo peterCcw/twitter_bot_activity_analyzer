@@ -6,12 +6,12 @@
                 <table mat-table [dataSource]="this.accounts" class="mat-elevation-z8">
                     <ng-container matColumnDef="twitterId">
                     <th mat-header-cell *matHeaderCellDef>{{ dict.accountTwitterIdTabHeader }}</th>
-                    <td mat-cell *matCellDef="let element"><b>{{ element.twitter_id }}</b></td>
+                    <td mat-cell *matCellDef="let element" (click)="goSnapshotDetail(element.id)" class="table-cell"><b>{{ element.twitter_id }}</b></td>
                     </ng-container>
 
                     <ng-container matColumnDef="screenName">
                         <th mat-header-cell *matHeaderCellDef>{{ dict.accountScreenNameTabHeader }}</th>
-                        <td mat-cell *matCellDef="let element"><b>{{ element.screen_name }}</b></td>
+                        <td mat-cell *matCellDef="let element" (click)="goSnapshotDetail(element.id)" class="table-cell"><b>{{ element.screen_name }}</b></td>
                         </ng-container>
 
                     <ng-container matColumnDef="delete">

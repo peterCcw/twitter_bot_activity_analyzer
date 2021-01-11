@@ -13,6 +13,6 @@
 </mat-toolbar>
 <app-auth *ngIf="component == 'auth'" [mode]="this.authMode" [logInClicked]="logInSubject.asObservable()" [registerClicked]="registerSubject.asObservable()" (loggedInEmitter)="gotLogged($event)"></app-auth>
 <app-panel *ngIf="component == 'panel'" (detailEmitter)="goDetail($event)"></app-panel>
-<app-list *ngIf="component == 'list'" (addAccountClicked)='addAccount($event)'></app-list>
+<app-list *ngIf="component == 'list'" (addAccountClicked)='addAccount($event)' (detailEmitter)="goDetail($event)"></app-list>
 <app-check *ngIf="component == 'check'" [checkClicked]="checkSubject.asObservable()"></app-check>
 <app-detail *ngIf="component == 'detail'" [detailInfo]="this.detailInfo"></app-detail>

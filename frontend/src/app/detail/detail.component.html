@@ -1,7 +1,17 @@
 <mat-card class="mat-elevation-z8">
     <mat-card-title class="margined-header">{{ dict.snapshotDetails }}</mat-card-title>
     <mat-card-content>
-        <mat-grid-list *ngIf="detailedSnapshot != null" cols="2" rowHeight="fit" style="height: 600px;">
+        <div *ngIf="detailedSnapshot.suspended_info != ''">
+            <h2>{{ detailedSnapshot.suspended_info }}</h2>
+            <div>
+                <h2 class="h2-no-margin">{{ dict.dateOfSnapshot }}: {{ detailedSnapshot.date_of_snapshot | date:"dd-MM-yyyy" }}</h2>
+            </div>
+            <div>
+                <button mat-stroked-button [disabled]="!previousButtonAvailable" (click)="previousSnapshot()">{{ dict.previousSnapshot }}</button>
+                <button mat-stroked-button [disabled]="!nextButtonAvailable" (click)="nextSnapshot()" class="margined-button">{{ dict.nextSnapshot }}</button>
+            </div>
+        </div>
+        <mat-grid-list *ngIf="detailedSnapshot != null && detailedSnapshot.suspended_info == ''" cols="2" rowHeight="fit" style="height: 600px;">
             <mat-grid-tile rowspan=3>
                 <div>
                     <h2 class="subtitle">{{ dict.basicInfo }}:</h2>

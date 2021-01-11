@@ -221,6 +221,7 @@ export class PanelComponent implements OnInit {
               var tooltipString = [];
               tooltipString.push('');
               tooltipString.push(dictionary.score + ': ' + snap.bot_score.toPrecision(4));
+              tooltipString.push('Is active: ' + snap.is_active);
               tooltipString.push('');
               tooltipString.push(dictionary.features + ":")
               for (let key in snap.features) {

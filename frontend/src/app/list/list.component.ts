@@ -15,6 +15,7 @@ export class ListComponent implements OnInit {
   ) { }
 
   @Output() addAccountClicked = new EventEmitter();
+  @Output() detailEmitter = new EventEmitter();
   accounts: any = [];
 
   displayedColumns: string[] = ['twitterId', 'screenName', 'delete'];
@@ -41,5 +42,9 @@ export class ListComponent implements OnInit {
 
   addAccount(){
     this.addAccountClicked.emit(true);
+  }
+
+  goSnapshotDetail(id: number){ // emits event to main component
+    this.detailEmitter.emit({snapshotId: null, accountId: id});
   }
 }

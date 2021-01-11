@@ -181,3 +181,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .margined-suspended-info {
   padding-top: 1% !important;
 }
+
+.table-cell:hover {
+  cursor: pointer;
+}
