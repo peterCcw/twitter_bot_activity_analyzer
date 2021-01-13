@@ -1,10 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatSelectionListChange } from '@angular/material/list';
+import { MatSelectionList, MatSelectionListChange } from '@angular/material/list';
 import { ApiService } from '../api.service';
 import { Chart } from 'node_modules/chart.js';
 import { dictionary } from '../dictionary';
 import { colors } from '../colors';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 interface accountListElement{
   id: number;
@@ -40,6 +41,8 @@ export class PanelComponent implements OnInit {
 
 
   @Output() detailEmitter = new EventEmitter();
+
+  @ViewChild('myList') list: MatSelectionList;
 
   ngOnInit(): void {
     this.ctx = document.getElementById('myChart');
@@ -286,6 +289,23 @@ export class PanelComponent implements OnInit {
       changed.isSelected = false;
     }
     this.prepareData();
+ }
+
+ onChangeAll(change) {
+   if(change == true){
+     this.list.selectAll();
+     this.accounts.forEach(function(account){
+       account.isSelected = true;
+     });
+     this.prepareData();
+   }
+   else{
+     this.list.deselectAll();
+     this.accounts.forEach(function(account){
+      account.isSelected = false;
+    });
+    this.prepareData();
+   }
  }
 
   goSnapshotDetail(){ // emits event to main component

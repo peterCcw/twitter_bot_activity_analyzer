@@ -66,6 +66,7 @@ var dictionary = {
     enterDateRange: "Enter a date range",
     startDatePlaceholder: "Start date",
     endDatePlaceholder: "End date",
+    selectAll:"Select all",
 
     // main app strings
     appName: "Bot scorer",

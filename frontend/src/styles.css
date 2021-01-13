@@ -185,3 +185,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .table-cell:hover {
   cursor: pointer;
 }
+
+.selectAllCheckbox {
+  font-size: large;
+}

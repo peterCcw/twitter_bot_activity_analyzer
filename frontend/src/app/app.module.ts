@@ -9,6 +9,7 @@ import { ApiService } from './api.service';
 import { ListComponent } from './list/list.component';
 import { CheckComponent } from './check/check.component';
 import { PanelComponent } from './panel/panel.component';
+import { DetailComponent } from './detail/detail.component'; 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -24,7 +25,7 @@ import {MatTableModule} from '@angular/material/table';
 import {MatIconModule} from '@angular/material/icon'; 
 import {MatToolbarModule} from '@angular/material/toolbar'; 
 import {ScrollingModule} from '@angular/cdk/scrolling';
-import { DetailComponent } from './detail/detail.component'; 
+import {MatCheckboxModule} from '@angular/material/checkbox'; 
 
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatNativeDateModule} from '@angular/material/core';
@@ -57,7 +58,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatToolbarModule,
     ScrollingModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatCheckboxModule
   ],
   providers: [AuthComponent],
   bootstrap: [AppComponent],

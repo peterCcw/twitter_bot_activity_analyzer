@@ -28,10 +28,6 @@ export class AppComponent implements OnInit{
   // auth elements
   authMode: string;
 
-  userGotLogged(val){
-    this.component = 'panel';
-  }
-
   logOut() {
     this.apiService.logoutUser().subscribe(
         result => {
