@@ -10,7 +10,7 @@
             <mat-grid-tile rowspan=3>
                 <div class="panel-account-list-grid">
                     <h2>{{ dict.monitoredAccounts }}:</h2>
-                    <mat-checkbox color="primary" labelPosition='before' (change)="onChangeAll($event.checked)" class="selectAllCheckbox">{{ dict.selectAll }}</mat-checkbox>
+                    <mat-checkbox [checked]="true" color="primary" labelPosition='before' (change)="onChangeAll($event.checked)" class="selectAllCheckbox">{{ dict.selectAll }}</mat-checkbox>
                     <cdk-virtual-scroll-viewport class="scroll-panel" itemSize="50">
                         <mat-selection-list #myList color="primary" (selectionChange)="onChangeList($event)" class="panel-account-list">
                             <mat-list-option *ngFor="let account of accounts" [value]="account.id" [selected]="true">
