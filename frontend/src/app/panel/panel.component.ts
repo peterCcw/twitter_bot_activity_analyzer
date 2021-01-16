@@ -204,7 +204,7 @@ export class PanelComponent implements OnInit {
         legend: {
           display: true,
           position: "bottom",
-      },
+        },
         tooltips: {
           callbacks: {
             label: function(tooltipItem, data){ // label format: <color> - <screen name> - <full name>
@@ -235,7 +235,18 @@ export class PanelComponent implements OnInit {
             }
           },
         },
-      }
+        hover: {
+          onHover: function(e, el) {
+            var chart:any = document.getElementById("myChart");
+            if(el.length != 0){
+              chart.setAttribute("style", "cursor: pointer");
+            }
+            else{
+              chart.setAttribute("style", "cursor: default");
+            }
+          }
+        }
+      },
     });
 
     var chart = this.myChart;
