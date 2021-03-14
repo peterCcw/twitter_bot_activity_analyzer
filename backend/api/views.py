@@ -8,7 +8,7 @@ from rest_framework.viewsets import ViewSet
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.decorators import api_view, authentication_classes, \
     permission_classes, action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authtoken.models import Token
@@ -51,7 +51,7 @@ class AccountSnapshotViewSet(ViewSet):
             return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     @action(detail=True, methods=['get'])
-    def detail(self, request, pk=None):
+    def details(self, request, pk=None):
         """
         Returns details for specific snapshot (pk = snapshot id).
 
@@ -130,9 +130,6 @@ class AccountSnapshotViewSet(ViewSet):
 
 class AccountViewSet(ViewSet):
     """Handles accounts access."""
-
-    authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
 
     def list(self, request):
         """
@@ -235,7 +232,7 @@ class AccountViewSet(ViewSet):
 class UserViewSet(ViewSet):
     """Handles users access"""
     authentication_classes = [TokenAuthentication]
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def create(self, request):
         """
@@ -269,7 +266,7 @@ class UserViewSet(ViewSet):
         token, created = Token.objects.get_or_create(user=user)
         return Response({'token': token.key})
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def logout(self, request):
         """
         Logs user out.
