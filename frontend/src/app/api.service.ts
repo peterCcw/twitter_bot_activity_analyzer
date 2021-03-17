@@ -27,51 +27,52 @@ export class ApiService {
 
   loginUser(authData){
     const body = JSON.stringify(authData);
-    const url = this.url.concat("users/login/");
+    const url = this.url.concat("user/login/");
     return this.httpClient.post(url, body, {headers: this.headers});
   }
 
   logoutUser(){
-    const url = this.url.concat("users/logout/");
+    const url = this.url.concat("user/logout/");
     return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
 
   registerUser(authData){
-    const url = this.url.concat("users/register/");
+    const url = this.url.concat("user/register/");
     const body = JSON.stringify(authData);
     return this.httpClient.post(url, body, {headers: this.getAuthHeaders()});
   }
 
   getAccounts(){
-    const url = this.url.concat("accounts/");
+    const url = this.url.concat("account/");
     return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
 
   deleteAccount(id: number){
-    const url = this.url.concat("accounts/delete/").concat(id.toString()).concat("/");
+    const url = this.url.concat("account/").concat(id.toString()).concat("/");
     return this.httpClient.delete(url, {headers: this.getAuthHeaders()});
+  }
+  
+  addToList(twitter_id: number, screen_name: string){
+    const url = this.url.concat('account/');
+    const body = JSON.stringify({twitter_id: twitter_id, screen_name: screen_name});
+    return this.httpClient.post(url, body, {headers: this.getAuthHeaders()});
   }
 
   checkAccount(screen_name: string){
-    const url = this.url.concat("snapshots/single/");
+    const url = this.url.concat("snapshot/single/");
     const params = new HttpParams().set('screen_name', screen_name);
     const options = {headers: this.getAuthHeaders(), params: params} 
     return this.httpClient.get(url, options);
   }
 
-  addToList(twitter_id: number, screen_name: string){
-    const url = this.url.concat('accounts/add/');
-    const body = JSON.stringify({twitter_id: twitter_id, screen_name: screen_name});
-    return this.httpClient.post(url, body, {headers: this.getAuthHeaders()});
-  }
-
   getSnapshotList(id:number){
-    const url = this.url.concat('snapshots/list/').concat(id.toString().concat("/"));
-    return this.httpClient.get(url, {headers: this.getAuthHeaders()});
+    //const url = this.url.concat('snapshots/').concat(id.toString()).concat('/list/');
+    const url = this.url.concat('snapshot/').concat(id.toString()).concat('/');
+	return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
 
   getSnapshotDetail(id:number){
-    const url = this.url.concat('snapshots/detail/').concat(id.toString().concat("/"));
+    const url = this.url.concat('snapshot/').concat(id.toString()).concat('/details/');
     return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
 }
