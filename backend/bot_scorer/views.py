@@ -180,7 +180,7 @@ def get_most_important_features(features_input):
 
 def get_data_change(snapshot_id):
     """
-    Calculate change of features and other account data (up, same or down)
+    Calculates change of features and other account data (up, same or down)
     between input snapshot and previous one
 
     :param snapshot_id: int

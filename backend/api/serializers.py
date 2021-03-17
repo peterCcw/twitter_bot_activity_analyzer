@@ -38,7 +38,7 @@ class AccountSnapshotAllSerializer(ModelSerializer):
             'verified': obj.verified,
             'protected': obj.protected,
         }
-        return get_most_important_features(features)
+        return get_most_important_features(features_input=features)
 
     def get_screen_name(self, obj):
         """Returns snapshot's account's screen name.
