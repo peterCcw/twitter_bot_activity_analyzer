@@ -25,6 +25,7 @@ export class ApiService {
       Authorization: tokenStr});
   }
 
+  // Access to user's endpoints
   loginUser(authData){
     const body = JSON.stringify(authData);
     const url = this.url.concat("user/login/");
@@ -37,36 +38,37 @@ export class ApiService {
   }
 
   registerUser(authData){
-    const url = this.url.concat("user/register/");
+    const url = this.url.concat("user/");
     const body = JSON.stringify(authData);
-    return this.httpClient.post(url, body, {headers: this.getAuthHeaders()});
+    return this.httpClient.post(url, body, {headers: this.headers});
   }
-
+  //
+  // Access to account's endpoints
   getAccounts(){
     const url = this.url.concat("account/");
     return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
 
-  deleteAccount(id: number){
-    const url = this.url.concat("account/").concat(id.toString()).concat("/");
-    return this.httpClient.delete(url, {headers: this.getAuthHeaders()});
-  }
-  
   addToList(twitter_id: number, screen_name: string){
     const url = this.url.concat('account/');
     const body = JSON.stringify({twitter_id: twitter_id, screen_name: screen_name});
     return this.httpClient.post(url, body, {headers: this.getAuthHeaders()});
   }
 
+  deleteAccount(id: number){
+    const url = this.url.concat("account/").concat(id.toString()).concat("/");
+    return this.httpClient.delete(url, {headers: this.getAuthHeaders()});
+  }
+  //
+  // Access to snapshot's methods
   checkAccount(screen_name: string){
     const url = this.url.concat("snapshot/single/");
     const params = new HttpParams().set('screen_name', screen_name);
-    const options = {headers: this.getAuthHeaders(), params: params} 
+    const options = {headers: this.getAuthHeaders(), params: params}
     return this.httpClient.get(url, options);
   }
 
   getSnapshotList(id:number){
-    //const url = this.url.concat('snapshots/').concat(id.toString()).concat('/list/');
     const url = this.url.concat('snapshot/').concat(id.toString()).concat('/');
 	return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
@@ -75,4 +77,5 @@ export class ApiService {
     const url = this.url.concat('snapshot/').concat(id.toString()).concat('/details/');
     return this.httpClient.get(url, {headers: this.getAuthHeaders()});
   }
+  //
 }

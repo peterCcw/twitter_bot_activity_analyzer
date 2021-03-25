@@ -5,7 +5,7 @@
     <mat-card-content>
         <div *ngIf="mode == 'logIn'">
             <form [formGroup]="logInForm" (ngSubmit)="logIn()">
-                
+
                 <mat-form-field appearance="outline">
                     <mat-label>{{ dict.username }}</mat-label>
                     <input matInput formControlName="username" placeholder="{{ dict.usernamePlaceholder }}">
@@ -30,7 +30,7 @@
                     <mat-label>{{ dict.password }}</mat-label>
                     <input matInput formControlName="password" [type]="'password'">
                 </mat-form-field>
-                <mat-icon matTooltipClass="allow-cr my-wide-tooltip" matTooltipPosition="right" matTooltip='Info about password policy:&#13;1. Password must contain at least 8 characters.&#13;2. Password must not be entirely numeric.&#13;3. Password must not be common (e.g., qwe123456)&#13;4. Password must not be too similar to username.'>info</mat-icon>
+                <mat-icon matTooltipClass="allow-cr wide-tooltip" matTooltipPosition="right" matTooltip='Info about password policy:&#13;1. Password must contain at least 8 characters.&#13;2. Password must not be entirely numeric.&#13;3. Password must not be common (e.g., qwe123456)&#13;4. Password must not be too similar to username.'>info</mat-icon>
                 <br>
                 <mat-form-field appearance="outline">
                     <mat-label>{{ dict.confirmPassword }}</mat-label>

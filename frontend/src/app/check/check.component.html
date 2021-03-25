@@ -1,6 +1,6 @@
 <mat-card class="mat-elevation-z8">
     <mat-card-title class="margined-header">{{ dict.checkHeader }}</mat-card-title>
-    <mat-card-content>    
+    <mat-card-content>
         <div *ngIf="!result">
             <form [formGroup]="checkForm" (ngSubmit)="checkAccount()">
                 <mat-form-field appearance="outline">
@@ -14,13 +14,11 @@
             </form>
         </div>
         <div *ngIf="result">
-            <div *ngIf="!result.suspended_info">
-                <mat-divider></mat-divider>
-                <mat-grid-list cols="2" rowHeight="fit" style="height: 600px;">
-                    <mat-grid-tile rowspan=3>
-                        <div>
-                            <h2 class="subtitle">{{ dict.basicInfo }}:</h2>
-                            <mat-list role="list">
+          <div *ngIf="!result.suspended_info">
+            <div fxLayout.lt-md="column" fxLayout.gt-sm="row">
+              <div fxLayout="column" fxFill fxFlex.gt-sm="40">
+                <h2 class="subtitle">{{ dict.basicInfo }}:</h2>
+                <mat-list role="list">
                                 <mat-list-item role="listitem">
                                     <p><b>{{ dict.twitterId }}: </b>   {{ result.twitter_id }}</p>
                                 </mat-list-item>
@@ -46,12 +44,10 @@
                                     <p><b>{{ dict.isActive }}: </b> {{ result.is_active }}</p>
                                 </mat-list-item>
                             </mat-list>
-                        </div>
-                    </mat-grid-tile>
-                    <mat-grid-tile rowspan=3>
-                        <div>
-                            <h2 class="subtitle">{{ dict.features }}:</h2>
-                            <mat-list role="list">
+              </div>
+              <div fxLayout="column" fxFill fxFlex.gt-sm="40">
+                <h2 class="subtitle">{{ dict.features }}:</h2>
+                <mat-list role="list">
                                 <mat-list-item role="listitem">
                                     <p><b>{{ dict.statusesCount }}:</b> {{ result.features.statuses_count }}</p>
                                 </mat-list-item>
@@ -77,19 +73,15 @@
                                     <p><b>{{ dict.protected }}:</b> {{ result.features.protected }}</p>
                                 </mat-list-item>
                             </mat-list>
-                        </div>
-                    </mat-grid-tile>
-                    <mat-grid-tile colspan=2>
-                        <mat-divider></mat-divider>
-                        <div class="margined-suspended-info">
-                            <h2 class="score">{{ dict.botScore }}: {{ result.bot_score }}</h2>
-                            <br>
-                            <button mat-stroked-button *ngIf="!result.added" (click)="addToList()" class="mat-elevation-z4">{{ dict.addAccount }}</button>
-                            <h2 *ngIf="result.added">{{ dict.accountAdded }}.</h2>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
+              </div>
             </div>
+            <div class="margined-suspended-info">
+              <h2 class="score">{{ dict.botScore }}: {{ result.bot_score }}</h2>
+              <br>
+              <button mat-stroked-button *ngIf="!result.added" (click)="addToList()" class="mat-elevation-z4">{{ dict.addAccount }}</button>
+              <h2 *ngIf="result.added">{{ dict.accountAdded }}.</h2>
+            </div>
+          </div>
             <div *ngIf="result.suspended_info">
                 <mat-divider></mat-divider>
                 <div class="margined-suspended-info">
@@ -99,3 +91,4 @@
         </div>
     </mat-card-content>
 </mat-card>
+

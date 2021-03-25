@@ -1,18 +1,83 @@
-<mat-toolbar color="primary">
-  <span (click)="displayHome()" class="navbar-title">{{ dict.appName }}</span>
-
-  <span class="spacer"></span>
-
-  <span *ngIf="this.isLogged()" class="navbar-hello">{{ dict.greeting }}, {{ this.cookieService.get('username') }}!</span>
-  <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayPanel()" class="navbar-button">{{ dict.panel }}</button>
-  <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayList()" class="navbar-button">{{ dict.listHeader}}</button>
-  <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayCheckAccount()" class="navbar-button">{{ dict.checkAccount }}</button>
-  <button mat-stroked-button *ngIf="this.isLogged()" (click)="logOut()" class="navbar-button">{{ dict.logOut }}</button>
-  <button mat-stroked-button *ngIf="!this.isLogged()" (click)="logIn()" class="navbar-button">{{ dict.logIn }}</button>
-  <button mat-stroked-button *ngIf="!this.isLogged()" (click)="register()" class="navbar-button">{{ dict.registerShort }}</button>
-</mat-toolbar>
-<app-auth *ngIf="component == 'auth'" [mode]="this.authMode" [logInClicked]="logInSubject.asObservable()" [registerClicked]="registerSubject.asObservable()" (loggedInEmitter)="gotLogged($event)"></app-auth>
-<app-panel *ngIf="component == 'panel'" (detailEmitter)="goDetail($event)"></app-panel>
-<app-list *ngIf="component == 'list'" (addAccountClicked)='addAccount($event)' (detailEmitter)="goDetail($event)"></app-list>
-<app-check *ngIf="component == 'check'" [checkClicked]="checkSubject.asObservable()"></app-check>
-<app-detail *ngIf="component == 'detail'" [detailInfo]="this.detailInfo"></app-detail>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav role="navigation">
+    <mat-nav-list>
+      <div *ngIf="!this.isLogged()">
+        <a mat-list-item (click)="sidenav.toggle()" (click)="logIn()">
+          <mat-icon>login</mat-icon><span class="nav-caption">{{ dict.logIn }}</span>
+        </a>
+        <a mat-list-item (click)="sidenav.toggle()" (click)="register()">
+          <mat-icon>person_add</mat-icon><span class="nav-caption">{{ dict.registerShort }}</span>
+        </a>
+    </div>
+    <div *ngIf="this.isLogged()">
+      <div class="side-nav-name-container">
+        <span class="nav-caption">{{ dict.greeting }}, {{ this.cookieService.get('username') }}!</span>
+      </div>
+      <mat-divider></mat-divider>
+      <a mat-list-item (click)="sidenav.toggle()" (click)="displayPanel()">
+        <mat-icon>timeline</mat-icon><span class="nav-caption">{{ dict.panel }}</span>
+      </a>
+      <a mat-list-item (click)="sidenav.toggle()" (click)="displayList()">
+        <mat-icon>list</mat-icon><span class="nav-caption">{{ dict.listHeader}}</span>
+      </a>
+      <a mat-list-item (click)="sidenav.toggle()" (click)="displayCheckAccount()">
+        <mat-icon>account_box</mat-icon><span class="nav-caption">{{ dict.checkAccount }}</span>
+      </a>
+      <a mat-list-item (click)="sidenav.toggle()" (click)="logOut()">
+        <mat-icon>exit_to_app</mat-icon><span class="nav-caption">{{ dict.logOut }}</span>
+      </a>
+    </div>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div fxHide.gt-xs *ngIf="!this.isLogged()">
+        <button mat-icon-button (click)="sidenav.toggle()" class="navbar-menu-icon-container">
+          <mat-icon class="navbar-menu-icon">menu</mat-icon>
+        </button>
+      </div>
+      <div fxHide.gt-sm *ngIf="this.isLogged()">
+        <button mat-icon-button (click)="sidenav.toggle()" class="navbar-menu-icon-container">
+          <mat-icon class="navbar-menu-icon">menu</mat-icon>
+        </button>
+      </div>
+      <div>
+        <span (click)="displayHome()" class="navbar-title">{{ dict.appName }}</span>
+      </div>
+      <div fxFlex fxLayout fxLayoutAlign="end" fxHide.lt-sm *ngIf="!this.isLogged()">
+        <ul fxLayout fxLayoutGap="0.75em" class="navigation-items">
+          <li>
+            <button mat-raised-button color="accent" (click)="logIn()" class="navbar-button mat-elevation-z10" class="navbar-button">{{ dict.logIn }}</button>
+          </li>
+          <li>
+            <button mat-raised-button color="accent" (click)="register()" class="navbar-button mat-elevation-z10" class="navbar-button">{{ dict.registerShort }}</button>
+          </li>
+        </ul>
+      </div>
+      <div fxFlex fxLayout fxLayoutAlign="end" fxHide.lt-md *ngIf="this.isLogged()">
+        <ul fxLayout fxLayoutGap="0.75em" class="navigation-items">
+          <li>
+            <span *ngIf="this.isLogged()">{{ dict.greeting }}, {{ this.cookieService.get('username') }}!</span>
+          </li>
+          <li>
+            <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayPanel()" class="navbar-button">{{ dict.panel }}</button>
+          </li>
+          <li>
+            <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayList()" class="navbar-button">{{ dict.listHeader}}</button>
+          </li>
+          <li>
+            <button mat-stroked-button *ngIf="this.isLogged()" (click)="displayCheckAccount()" class="navbar-button">{{ dict.checkAccount }}</button>
+          </li>
+          <li>
+            <button mat-stroked-button *ngIf="this.isLogged()" (click)="logOut()" class="navbar-button">{{ dict.logOut }}</button>
+          </li>
+        </ul>
+      </div>
+    </mat-toolbar>
+    <app-auth *ngIf="component == 'auth'" [mode]="this.authMode" [logInClicked]="logInSubject.asObservable()" [registerClicked]="registerSubject.asObservable()" (loggedInEmitter)="gotLogged($event)"></app-auth>
+    <app-panel *ngIf="component == 'panel'" (detailEmitter)="goDetail($event)"></app-panel>
+    <app-list *ngIf="component == 'list'" (addAccountClicked)='addAccount($event)' (detailEmitter)="goDetail($event)"></app-list>
+    <app-check *ngIf="component == 'check'" [checkClicked]="checkSubject.asObservable()"></app-check>
+    <app-detail *ngIf="component == 'detail'" [detailInfo]="this.detailInfo"></app-detail>
+  </mat-sidenav-content>
+</mat-sidenav-container>

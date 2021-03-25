@@ -53,7 +53,7 @@ export class PanelComponent implements OnInit {
     this.formGroup.get('startDate').setValue(currDateMinus7);
     this.formGroup.get('endDate').setValue(currentDate);
 
-    
+
     this.apiService.getAccounts().subscribe(
       result => {   // gets all accounts belonging to user from the server
         for (let key in result) {
@@ -117,7 +117,7 @@ export class PanelComponent implements OnInit {
       // finding matching snapshots and preparing datasets
       this.accounts.forEach(function (account) {
         if(account.isSelected == true){
-          
+
           // finding snapshots between startdate and enddate
           var snapshots = [];
           account.snapshots.forEach(function(snapshot){
@@ -156,7 +156,7 @@ export class PanelComponent implements OnInit {
 
   generatePlot(){
     var colors = this.cols;
-    
+
     var datasets = [];
     var colorArrId = 0;
     this.datasets.forEach(function (dataset){
@@ -171,8 +171,8 @@ export class PanelComponent implements OnInit {
       });
       if(dataset.find(snap => snap != null) != undefined){  // push data to final dataset if there is at least one snapshot
         var accountScreenName = dataset.find(snap => snap != null).screen_name;
-        datasets.push(  
-        { 
+        datasets.push(
+        {
           data: datasetScores,
           label: accountScreenName,
           borderColor: colors[colorArrId],
@@ -196,6 +196,7 @@ export class PanelComponent implements OnInit {
         datasets: datasets,
       },
       options: {
+        maintainAspectRatio: false,
         title: {
           display: true,
           text: this.dict.botScores,
@@ -217,7 +218,7 @@ export class PanelComponent implements OnInit {
 
               var snapshotId: any = document.getElementById("hiddenSnapshotId");
               snapshotId.value = snap.id;
-  
+
               var accountId: any = document.getElementById("hiddenAccountId");
               accountId.value = snap.account;
 
@@ -264,7 +265,7 @@ export class PanelComponent implements OnInit {
     // converts Date obj to format dd-mm-yy
     var date = dateInput;
     var outputDate: string = '';
-        
+
     var day: any = date.getDate();
     if(day < 10){
       day = '0' + day.toString();
@@ -274,7 +275,7 @@ export class PanelComponent implements OnInit {
     }
     outputDate = outputDate + day;
     outputDate = outputDate + "-";
-        
+
     var month: any = date.getMonth();
     month = month + 1;
     if(month < 10){
@@ -285,7 +286,7 @@ export class PanelComponent implements OnInit {
     }
     outputDate = outputDate + month;
     outputDate = outputDate + "-";
-        
+
     var year = date.getFullYear();
     outputDate = outputDate + year.toString().substr((year.toString().length - 2));
     return outputDate;
