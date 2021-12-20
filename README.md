@@ -1,5 +1,6 @@
 # Twitter Bot Analyzer
-Twitter Bot Analyzer is application written as a main part of my Bachelor of Engineering thesis with some later upgrades.
+Twitter Bot Analyzer is application written as a main part of my Bachelor of Engineering thesis with some later upgrades. For my thesis *Software environment for analyzing the activity of social bots* (and therefore also this app) I was awarded with the second prize in the first category of [3rd edition of the competition for the Marian Rejewski](https://www.cyber.mil.pl/articles/aktualnosci-y/2021-12-16l-rozstrzygnieto-iii-edycje-konkursu-o-nagrode-im-mariana-rejewskiego/) which was organised by the Department of Cybersecurity of the Ministry
+of National Defence.
 ### Table of contents
 * [Description](#description)
     * [About](#about)
